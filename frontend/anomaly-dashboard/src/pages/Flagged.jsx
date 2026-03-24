@@ -5,7 +5,12 @@ export default function Flagged() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    getFlaggedAnomalies().then(res => setData(res.data));
+    getFlaggedAnomalies()
+      .then(res => {
+        const result = Array.isArray(res.data) ? res.data : [];
+        setData(result);
+      })
+      .catch(err => console.error("Failed to fetch flagged:", err));
   }, []);
 
   return (

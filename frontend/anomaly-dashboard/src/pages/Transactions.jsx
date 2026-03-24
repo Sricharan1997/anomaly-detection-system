@@ -5,7 +5,12 @@ export default function Transactions() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    getTransactions().then(res => setData(res.data));
+    getTransactions()
+      .then(res => {
+        const result = Array.isArray(res.data) ? res.data : [];
+        setData(result);
+      })
+      .catch(err => console.error("Failed to fetch transactions:", err));
   }, []);
 
   return (

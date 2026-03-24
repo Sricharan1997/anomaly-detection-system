@@ -5,7 +5,12 @@ export default function Anomalies() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    getAnomalies().then(res => setData(res.data));
+    getAnomalies()
+      .then(res => {
+        const result = Array.isArray(res.data) ? res.data : [];
+        setData(result);
+      })
+      .catch(err => console.error("Failed to fetch anomalies:", err));
   }, []);
 
   return (
